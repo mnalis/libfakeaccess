@@ -1,0 +1,12 @@
+This LD_PRELOAD shared library is used to override vsftpd requiring chroot
+to be non-writeable, and Debian wheezy missing option
+allow_writable_root=YES
+
+So, we fake access(2) check for "/", W_OK to return "false" always.
+
+For example, on Debian system you can edit /etc/init.d/vsftpd and before
+starting daemon put
+
+LD_PRELOAD="/usr/local/lib/libfakeaccess.so"
+export LD_PRELOAD
+
